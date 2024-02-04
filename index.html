@@ -1,13 +1,52 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue</title>
+    <title>Document</title>
+    <link href="./src/style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&family=Sixtyfour&display=swap"
+      rel="stylesheet" />
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <header>
+      <div id="logo-container">
+        <img id="logo" src="./src/assets/logo_sm.png" alt="logo" />
+        <div id="title-container">
+          <h1 id="title">dnsr</h1>
+        </div>
+      </div>
+      <div id="domain-form-container">
+        <form id="domain-form">
+          <input id="domain-form-input" type="text" name="name" />
+        </form>
+      </div>
+      <!-- <div>
+        <input id="dark-mode-toggle" type="checkbox" name="name" />
+      </div> -->
+    </header>
+    <main>
+      <div id="authoritative-container">
+        <header id="authoritative-header"><h2>Authoritative</h2></header>
+        <section id="authoritative-section"></section>
+      </div>
+      <div id="doh-container">
+        <header id="doh-header"><h2>Global</h2></header>
+        <section id="doh-section">
+          <div class="resolver-container" id="googleData"></div>
+          <div class="resolver-container" id="cloudflareData"></div>
+          <div class="resolver-container" id="quad9Data"></div>
+          <div class="resolver-container" id="alibabaData"></div>
+        </section>
+      </div>
+    </main>
+    <script type="module" src="./src/main.ts"></script>
+    <script type="module" src="./src/test.ts"></script>
   </body>
 </html>
