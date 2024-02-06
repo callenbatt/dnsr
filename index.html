@@ -12,7 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&family=Sixtyfour&display=swap"
-      rel="stylesheet" />
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'" />
   </head>
   <body>
     <header>
@@ -24,7 +26,11 @@
       </div>
       <div id="domain-form-container">
         <form id="domain-form">
-          <input id="domain-form-input" type="text" name="hostname-input" />
+          <input
+            aria-label="hostname to query"
+            id="domain-form-input"
+            type="text"
+            name="hostname-input" />
         </form>
       </div>
       <!-- <div>
