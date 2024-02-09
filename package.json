@@ -9,8 +9,7 @@
   },
   "dependencies": {
     "@types/node": "^20.11.15",
-    "@vercel/node": "^3.0.17",
-    "vue": "^3.2.45"
+    "@vercel/node": "^3.0.17"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

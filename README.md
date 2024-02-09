@@ -1,21 +1,5 @@
-# Vue 3 + Vite
+# DNSR
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+DNSr is a DNS utility that retrieves DNS records associated with a specified hostname. It allows users to perform parallel queries against major resolvers using DNS over HTTPS, facilitating the retrieval of A, AAAA, CNAME, MX, TXT, and CAA records. DNSr also conducts server-side queries against authoritative nameservers, providing a means to verify updates and identify discrepancies between resolvers and authoritative sources.
 
-While this project uses Vue.js, Vite supports many popular JS frameworks. [See all the supported frameworks](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).
-
-## Deploy Your Own
-
-Deploy your own Vite project with Vercel.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/vite&template=vite)
-
-_Live Example: https://vite-vue-template.vercel.app_
-
-### Deploying From Your Terminal
-
-You can deploy your new Vite project with a single command from your terminal using [Vercel CLI](https://vercel.com/download):
-
-```shell
-$ vercel
-```
+This app was developed in pure vanilla everything, built with vite, deployed with vercel.
