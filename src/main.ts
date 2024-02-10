@@ -1,26 +1,10 @@
-type ResolveQueryType = "A" | "AAAA" | "CNAME" | "MX" | "TXT" | "NS" | "CAA";
-
-type ResolverName = "alibaba" | "cloudflare" | "google" | "quad9";
-
-type ResolverURL =
-  | "https://dns.alidns.com/resolve"
-  | "https://cloudflare-dns.com/dns-query"
-  | "https://dns.google/resolve"
-  | "https://dns.quad9.net:5053/dns-query";
-
-type ResolverIPs = "1.1.1.1" | "8.8.8.8" | "9.9.9.9" | "223.5.5.5";
-
-type DNSRecord = {
-  name: string;
-  type: number;
-  TTL: number;
-  data: string;
-};
-
-type FormattedDNSRecord = {
-  data: string;
-  ttl: number;
-};
+import {
+  DNSRecord,
+  FormattedDNSRecord,
+  ResolveQueryType,
+  ResolverName,
+  ResolverURL,
+} from "./types";
 
 const DNS_TYPES: { [key: number]: ResolveQueryType } = {
   1: "A",
@@ -325,6 +309,29 @@ const input = document.getElementById("domain-form-input") as HTMLInputElement;
 if (hash) {
   queryHash(hash);
   input.value = hash;
+} else {
+  renderNoHashPage();
+}
+
+function renderNoHashPage() {
+  document.body.classList.add("no-hash");
+  const domainFormContainerEl = document.getElementById(
+    "domain-form-container"
+  );
+  const headerEl = document.createElement("header");
+  headerEl.id = "domain-form-header";
+  headerEl.innerHTML = `
+    <p>A fast, multi-record, authoritative DNS dig tool</p>
+  `;
+  domainFormContainerEl?.prepend(headerEl);
+  const footerEl = document.createElement("footer");
+  footerEl.id = "domain-form-footer";
+  footerEl.innerHTML = `
+    <p> Major global resolvers are queried using DNS over HTTPS (DoH)
+    while authoritative name servers are queried on the edge, 
+    for fast, simple comparison. </p>
+  `;
+  domainFormContainerEl?.appendChild(footerEl);
 }
 
 function reloadPageWithNewHash(e: Event) {
