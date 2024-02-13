@@ -6,6 +6,26 @@ import {
   ResolverURL,
 } from "./types";
 
+const hash = window.location.hash.replace("#", "");
+const input = document.getElementById("domain-form-input") as HTMLInputElement;
+
+// assign the mobile class to the body if the screen width is less than 768px
+if (window.innerWidth < 768) {
+  document.body.classList.add("mobile", "fetching");
+}
+
+const darkModeToggle = document.getElementById("dark-mode-toggle");
+darkModeToggle?.addEventListener(
+  "change",
+  () => {
+    document.body.classList.toggle("dark");
+  },
+  false
+);
+
+const domainForm = document.getElementById("domain-form");
+domainForm?.addEventListener("submit", reloadPageWithNewHash, false);
+
 const DNS_TYPES: { [key: number]: ResolveQueryType } = {
   1: "A",
   5: "CNAME",
@@ -45,7 +65,6 @@ async function req(
 ) {
   try {
     if (reqExceptions(hostname, type, resolverURL)) return;
-    console.log(hostname, type, resolverURL);
     const response = resolverURL
       ? await fetch(`${resolverURL}?name=${hostname}&type=${type}`, {
           headers: {
@@ -260,7 +279,6 @@ async function renderDOHResponses(
 
 async function renderAuthoritativeResponses(hostname: string) {
   const responses = await req(hostname);
-  console.log(responses);
   const authoritiativeSectionEl = document.getElementById(
     "authoritative-section"
   );
@@ -291,6 +309,7 @@ async function renderAuthoritativeResponses(hostname: string) {
     resolverContainerEl.appendChild(resolverSectionEl);
     authoritiativeSectionEl.appendChild(resolverContainerEl);
   });
+  document.body.classList.remove("fetching");
 }
 
 async function queryHash(hash: string) {
@@ -302,9 +321,6 @@ async function queryHash(hash: string) {
     )
   );
 }
-
-const hash = window.location.hash.replace("#", "");
-const input = document.getElementById("domain-form-input") as HTMLInputElement;
 
 if (hash) {
   queryHash(hash);
@@ -339,15 +355,3 @@ function reloadPageWithNewHash(e: Event) {
   window.location.hash = `#${input?.value || ""}`;
   window.location.reload();
 }
-
-const darkModeToggle = document.getElementById("dark-mode-toggle");
-darkModeToggle?.addEventListener(
-  "change",
-  () => {
-    document.body.classList.toggle("dark");
-  },
-  false
-);
-
-const domainForm = document.getElementById("domain-form");
-domainForm?.addEventListener("submit", reloadPageWithNewHash, false);

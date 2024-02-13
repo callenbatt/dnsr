@@ -641,8 +641,9 @@ body.dark {
     justify-content: space-evenly;
     width: 100%;
   }
-  #logo-container {
+  #logo-container > a {
     padding-left: 2rem;
+    width: auto;
     position: initial;
   }
   #logo {
@@ -668,7 +669,7 @@ body.dark {
   #authoritative-section {
     max-width: 100%;
   }
-  #logo-container {
+  #logo-container > a{
     padding-left: 0;
     position: absolute;
     top: 1rem;
@@ -682,5 +683,10 @@ body.dark {
   }
   .dark #title {
     background-color: var(--grey-900);
+  }
+
+  body > footer,
+  .mobile.fetching #doh-container {
+    display: none;
   }
 }
