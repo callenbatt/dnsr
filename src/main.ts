@@ -27,6 +27,7 @@ const domainForm = document.getElementById("domain-form");
 domainForm?.addEventListener("submit", reloadPageWithNewHash, false);
 
 const DNS_TYPES: { [key: number]: ResolveQueryType } = {
+  0: "ERROR",
   1: "A",
   5: "CNAME",
   15: "MX",
@@ -34,6 +35,16 @@ const DNS_TYPES: { [key: number]: ResolveQueryType } = {
   28: "AAAA",
   257: "CAA",
 };
+
+// adding this to force the order of the records
+const DNS_TYPES_ARRAY = [
+  "A",
+  "AAAA",
+  "CNAME",
+  "MX",
+  "TXT",
+  "CAA",
+] as ResolveQueryType[];
 
 const RESOLVER_URL = {
   alibaba: "https://dns.alidns.com/resolve",
@@ -47,6 +58,51 @@ const RESOLVER_IPS = {
   cloudflare: "1.1.1.1",
   google: "8.8.8.8",
   quad9: "9.9.9.9",
+};
+
+const dnsStatusCodes: {
+  [key: number]: { message: string; description: string };
+} = {
+  0: {
+    message: "NOERROR",
+    description: "DNS Query completed successfully",
+  },
+  1: {
+    message: "FORMERR",
+    description: "DNS Query Format Error",
+  },
+  2: {
+    message: "SERVFAIL",
+    description: "Server failed to complete the DNS request",
+  },
+  3: {
+    message: "NXDOMAIN",
+    description: "Domain name does not exist",
+  },
+  4: {
+    message: "NOTIMP",
+    description: "Function not implemented",
+  },
+  5: {
+    message: "REFUSED",
+    description: "The server refused to answer for the query",
+  },
+  6: {
+    message: "YXDOMAIN",
+    description: "Name that should not exist, does exist",
+  },
+  7: {
+    message: "XRRSET",
+    description: "RRset that should not exist, does exist",
+  },
+  8: {
+    message: "NOTAUTH",
+    description: "Server not authoritative for the zone",
+  },
+  9: {
+    message: "NOTZONE",
+    description: "Name not in zone",
+  },
 };
 
 function reqExceptions(
@@ -81,9 +137,23 @@ async function req(
 
 function getResponsesFromResolver(hostname: string, resolverURL?: ResolverURL) {
   return Promise.all(
-    Object.values(DNS_TYPES).map(async (type: ResolveQueryType) => {
+    DNS_TYPES_ARRAY.map(async (type: ResolveQueryType) => {
       const res = await req(hostname, type, resolverURL);
-      return res?.Answer || [];
+      if (!res) return [];
+      if (res?.Status === 0) return res?.Answer || [];
+      if (res.Status !== 0) {
+        return [
+          {
+            type: 0,
+            ttl: 0,
+            name: hostname,
+            data: `${dnsStatusCodes[res.Status].message} (RCODE:${
+              res.Status
+            }): ${dnsStatusCodes[res.Status].description}`,
+          },
+        ];
+      }
+      return [];
     })
   );
 }
@@ -242,7 +312,6 @@ async function renderDOHResponses(
     hostname,
     RESOLVER_URL[resolverName] as ResolverURL
   );
-
   const formattedResponse = formatResponses(responses);
 
   const resolverContainerEl = document.getElementById(`${resolverName}Data`);
@@ -260,7 +329,6 @@ async function renderDOHResponses(
     const types = Object.keys(
       formattedResponse[hostname]
     ) as ResolveQueryType[];
-
     types.forEach((type) => {
       const typeEl = createElement.type(type);
       formattedResponse[hostname][type].forEach(
@@ -283,7 +351,20 @@ async function renderAuthoritativeResponses(hostname: string) {
     "authoritative-section"
   );
   if (!authoritiativeSectionEl) return;
-
+  if (!responses.length) {
+    const nameContainerEl = createElement.nameContainer();
+    nameContainerEl.appendChild(createElement.nameHeader(hostname));
+    const nameSectionEl = createElement.nameSection();
+    const errorEl = createElement.type("ERROR");
+    const errorRecordEl = createElement.record("ERROR", {
+      data: "No Namerservers Found",
+    });
+    errorEl.appendChild(errorRecordEl);
+    nameSectionEl.appendChild(errorEl);
+    nameContainerEl.appendChild(nameSectionEl);
+    authoritiativeSectionEl.appendChild(nameContainerEl);
+    return;
+  }
   responses.forEach((response: any) => {
     const resolverContainerEl = createElement.resolverContainer();
     resolverContainerEl.appendChild(

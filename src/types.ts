@@ -2,6 +2,7 @@ export type ResolveQueryType =
   | "A"
   | "AAAA"
   | "CNAME"
+  | "ERROR"
   | "MX"
   | "TXT"
   | "NS"
@@ -23,5 +24,5 @@ export type DNSRecord = {
 
 export type FormattedDNSRecord = {
   data: string;
-  ttl: number;
+  ttl?: number;
 };

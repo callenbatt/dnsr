@@ -1,24 +1,11 @@
 import dns from "dns";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-
+import type {
+  ResolveQueryType,
+  FormattedRecord,
+  ResolveReturnTypes,
+} from "./types";
 const DEFAULT_SERVER_IPS = ["1.1.1.1"];
-
-type ResolveQueryType = "ns" | "ipv4" | "ipv6" | "cname" | "caa" | "mx" | "txt";
-
-type FormattedRecord = {
-  data: string;
-  ttl?: number;
-};
-
-type ResolveReturnTypes = {
-  ns: string[] | undefined;
-  ipv4: dns.RecordWithTtl[] | undefined;
-  ipv6: dns.RecordWithTtl[] | undefined;
-  cname: string[] | undefined;
-  caa: dns.CaaRecord[] | undefined;
-  mx: dns.MxRecord[] | undefined;
-  txt: string[][] | undefined;
-};
 
 const resolve: {
   [T in ResolveQueryType]: (name: string) => Promise<ResolveReturnTypes[T]>;
@@ -96,7 +83,7 @@ async function getAllRecords(name: string, ips: string[]) {
   dns.promises.setServers(ips);
 
   const records = await Promise.all(
-    ["ipv4", "ipv6", "cname", "caa", "mx", "txt"].map(async (type) => {
+    ["ipv4", "ipv6", "cname", "mx", "txt", "caa"].map(async (type) => {
       const key = type === "ipv4" ? "a" : type === "ipv6" ? "aaaa" : type;
       return {
         [key]: await handleAndFormatResolve(type as ResolveQueryType, name),
@@ -113,7 +100,7 @@ async function queryAuthorativeServers(name: string) {
   let answers = [];
   const nameServers = await getNameServers(name);
 
-  if (!nameServers) return;
+  if (!nameServers) return [];
 
   for (const nameServer of nameServers) {
     const nameServerIPs = (await handleResolve("ipv4", nameServer))?.map(
