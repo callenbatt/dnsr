@@ -215,6 +215,10 @@
   --grey-800: #424242;
   --grey-900: #212121;
 }
+.hidden {
+  display: none;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -298,6 +302,12 @@ header {
   font-size: .75rem;
   max-width: 40rem;
   text-align: center;
+}
+
+#install-container {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
 }
 
 main {
@@ -548,8 +558,10 @@ main {
 .ttl-label {
   font-size: .75rem;
 }
-
 body > footer {
+  position: relative;
+}
+#plug-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -557,15 +569,15 @@ body > footer {
   color: var(--grey-600);
 }
 
-body > footer > span {
+#plug-container span {
   padding: .25rem;
 }
 
-body > footer img {
+#plug-container img {
   max-width: 1rem;
   max-height: 1rem;
 }
-body > footer .heart-emoji {
+#plug-container .heart-emoji {
   font-size: 1rem;
 }
 
@@ -705,7 +717,6 @@ body.dark {
     background-color: var(--grey-900);
   }
 
-  body > footer,
   .mobile.fetching #doh-container {
     display: none;
   }

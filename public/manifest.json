@@ -1,0 +1,25 @@
+{
+  "short_name": "DNSR",
+  "name": "DNSR",
+  "icons": [
+    {
+      "src": "/src/assets/logo_192.webp",
+      "type": "image/webp",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/src/assets/logo_528.webp",
+      "type": "image/webp",
+      "sizes": "528x528"
+    }
+  ],
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "background_color": "#008836",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#008836",
+  "shortcuts": [],
+  "description": "A fast, multi-record, authoritative DNS dig tool",
+  "screenshots": []
+}

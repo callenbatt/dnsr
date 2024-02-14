@@ -6,8 +6,9 @@
     <title>DNSR</title>
     <meta
       name="description"
-      content="DNSr: A fast, intuitive tool for detailed DNS record retrieval." />
+      content="DNSr: A fast, multi-record, authoritative DNS dig tool" />
     <link rel="icon" href="./src/assets/favicon.ico" type="image/x-icon" />
+    <link rel="manifest" href="/manifest.json" />
     <link href="./src/style.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -65,22 +66,27 @@
       </div>
     </main>
     <footer>
-      <span>Made with</span>
-      <span class="heart-emoji">❤️</span>
-      <span><img src="./src/assets/typescript.svg" alt="TypeScript" /></span>
-      <span><img src="./src/assets/vite.svg" alt="Vite" /></span>
-      <span><img src="./src/assets/vercel.svg" alt="Vercel" /></span>
-      <span>by Chris Batt</span>
-      <span>
-        <a href="https://github.com/callenbatt/dnsr">
-          <img src="./src/assets/github.svg" alt="GitHub" />
-        </a>
-      </span>
-      <span>
-        <a href="https://www.linkedin.com/in/chris-batt/">
-          <img src="./src/assets/linkedin.svg" alt="LinkedIn" />
-        </a>
-      </span>
+      <div id="plug-container">
+        <span>Made with</span>
+        <span class="heart-emoji">❤️</span>
+        <span><img src="./src/assets/typescript.svg" alt="TypeScript" /></span>
+        <span><img src="./src/assets/vite.svg" alt="Vite" /></span>
+        <span><img src="./src/assets/vercel.svg" alt="Vercel" /></span>
+        <span>by Chris Batt</span>
+        <span>
+          <a href="https://github.com/callenbatt/dnsr" target="_blank">
+            <img src="./src/assets/github.svg" alt="GitHub" />
+          </a>
+        </span>
+        <span>
+          <a href="https://www.linkedin.com/in/chris-batt/" target="_blank">
+            <img src="./src/assets/linkedin.svg" alt="LinkedIn" />
+          </a>
+        </span>
+      </div>
+      <div id="install-container">
+        <button id="install-button" class="hidden">Save to Home Screen</button>
+      </div>
     </footer>
 
     <script type="module" src="./src/main.ts"></script>

@@ -8,6 +8,7 @@ import {
 
 const hash = window.location.hash.replace("#", "");
 const input = document.getElementById("domain-form-input") as HTMLInputElement;
+const installButton = document.getElementById("install-button");
 
 // assign the mobile class to the body if the screen width is less than 768px
 if (window.innerWidth < 768) {
@@ -438,3 +439,38 @@ function reloadPageWithNewHash(e: Event) {
   window.location.hash = `#${input?.value || ""}`;
   window.location.reload();
 }
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  // Prevent the mini-infobar from appearing on mobile.
+  event.preventDefault();
+  console.log("👍", "beforeinstallprompt", event);
+  // Stash the event so it can be triggered later.
+  (window as any).deferredPrompt = event;
+  // Remove the 'hidden' class from the install button container.
+  installButton?.classList?.remove("hidden");
+});
+
+installButton?.addEventListener("click", async () => {
+  console.log("👍", "butInstall-clicked");
+  const promptEvent = (window as any).deferredPrompt;
+  if (!promptEvent) {
+    // The deferred prompt isn't available.
+    return;
+  }
+  // Show the install prompt.
+  promptEvent.prompt();
+  // Log the result
+  const result = await promptEvent.userChoice;
+  console.log("👍", "userChoice", result);
+  // Reset the deferred prompt variable, since
+  // prompt() can only be called once.
+  (window as any).deferredPrompt = null;
+  // Hide the install button.
+  installButton.classList.toggle("hidden", true);
+});
+
+window.addEventListener("appinstalled", (event) => {
+  console.log("👍", "appinstalled", event);
+  // Clear the deferredPrompt so it can be garbage collected
+  (window as any).deferredPrompt = null;
+});
