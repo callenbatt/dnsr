@@ -3,7 +3,7 @@
   "name": "DNSR",
   "icons": [
     {
-      "src": "./src/assets/logo_192.png",
+      "src": "./src/assets/logo_192.webp",
       "type": "image/webp",
       "sizes": "192x192"
     },
