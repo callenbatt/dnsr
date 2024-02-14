@@ -3,12 +3,12 @@
   "name": "DNSR",
   "icons": [
     {
-      "src": "./src/assets/logo_192.webp",
+      "src": "/images/logo_192.webp",
       "type": "image/webp",
       "sizes": "192x192"
     },
     {
-      "src": "./src/assets/logo_528.webp",
+      "src": "/images/logo_528.webp",
       "type": "image/webp",
       "sizes": "528x528"
     }
