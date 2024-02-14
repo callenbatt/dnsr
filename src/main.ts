@@ -248,6 +248,7 @@ const createElement = {
   },
 
   resolverHeader: (resolverName: ResolverName, resolverIPs?: string[]) => {
+    console.log(resolverName);
     const headerEl = document.createElement("header");
     headerEl.classList.add("resolver-header");
     headerEl.innerHTML = `
@@ -345,26 +346,27 @@ async function renderDOHResponses(
   resolverContainerEl.appendChild(resolverSectionEl);
 }
 
+const errorResponse = {
+  nameServer: "?",
+  records: {
+    ERROR: [
+      {
+        data: "No Namerservers Found",
+      },
+    ],
+  },
+};
+
 async function renderAuthoritativeResponses(hostname: string) {
-  const responses = await req(hostname);
+  let responses = await req(hostname);
   const authoritiativeSectionEl = document.getElementById(
     "authoritative-section"
   );
   if (!authoritiativeSectionEl) return;
   if (!responses.length) {
-    const nameContainerEl = createElement.nameContainer();
-    nameContainerEl.appendChild(createElement.nameHeader(hostname));
-    const nameSectionEl = createElement.nameSection();
-    const errorEl = createElement.type("ERROR");
-    const errorRecordEl = createElement.record("ERROR", {
-      data: "No Namerservers Found",
-    });
-    errorEl.appendChild(errorRecordEl);
-    nameSectionEl.appendChild(errorEl);
-    nameContainerEl.appendChild(nameSectionEl);
-    authoritiativeSectionEl.appendChild(nameContainerEl);
-    return;
+    responses = [errorResponse];
   }
+
   responses.forEach((response: any) => {
     const resolverContainerEl = createElement.resolverContainer();
     resolverContainerEl.appendChild(
