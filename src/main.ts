@@ -9,7 +9,7 @@ import {
 const hash = window.location.hash.replace("#", "");
 const input = document.getElementById("domain-form-input") as HTMLInputElement;
 const installButton = document.getElementById("install-button");
-
+const installContainer = document.getElementById("install-container");
 // assign the mobile class to the body if the screen width is less than 768px
 if (window.innerWidth < 768) {
   document.body.classList.add("mobile", "fetching");
@@ -447,7 +447,7 @@ window.addEventListener("beforeinstallprompt", (event) => {
   // Stash the event so it can be triggered later.
   (window as any).deferredPrompt = event;
   // Remove the 'hidden' class from the install button container.
-  installButton?.classList?.remove("hidden");
+  installContainer?.classList?.remove("hidden");
 });
 
 installButton?.addEventListener("click", async () => {
@@ -466,7 +466,7 @@ installButton?.addEventListener("click", async () => {
   // prompt() can only be called once.
   (window as any).deferredPrompt = null;
   // Hide the install button.
-  installButton.classList.toggle("hidden", true);
+  installContainer?.classList?.toggle("hidden", true);
 });
 
 window.addEventListener("appinstalled", (event) => {
