@@ -259,6 +259,7 @@ header {
   display: flex;
   align-items: center;
   position: absolute;
+  z-index: 100;;
   left:2rem;
   top: 2rem;
   text-decoration: none;
@@ -279,6 +280,8 @@ header {
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  position: relative;
+  width: 36rem;
 }
 
 #domain-form-input {
@@ -287,7 +290,21 @@ header {
   color: var(--grey-800);
   font-size: 1.25rem;
   padding: 1rem 2rem;
-  width: 30rem;
+  width: 100%;
+}
+
+#domain-form-button {
+  background: #fff;
+  border: none;
+  position: absolute;
+  height: 3rem;
+  width: 3rem;
+  font-family: 'Sixtyfour', sans-serif;
+  font-size: .75rem;
+  right: 0;
+  transform: translateX(-75%);
+  cursor: pointer;
+  color: var(--grey-600)
 }
 
 #domain-form-submit {
@@ -298,16 +315,11 @@ header {
   margin-left: .5rem;
   cursor: pointer;
 }
+
 #domain-form-footer {
   font-size: .75rem;
   max-width: 40rem;
   text-align: center;
-}
-
-#install-container {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
 }
 
 main {
@@ -558,14 +570,17 @@ main {
 .ttl-label {
   font-size: .75rem;
 }
+
 body > footer {
+  margin-top: auto;
   position: relative;
+  padding-bottom: 1rem;
 }
+
 #plug-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: auto;
   color: var(--grey-600);
 }
 
@@ -579,6 +594,18 @@ body > footer {
 }
 #plug-container .heart-emoji {
   font-size: 1rem;
+}
+#install-container > div {
+  text-align: center;
+  font-size: .75rem;
+}
+
+#install-container button {
+  background: #fff;
+  border: none;
+  color: var(--grey-800);
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 /* Dark Mode */
@@ -678,6 +705,9 @@ body.dark {
     width: auto;
     position: initial;
   }
+  .no-hash #logo-container > a {
+    position: absolute;
+  }
   #logo {
     width: 4rem;
   }
@@ -685,9 +715,8 @@ body.dark {
     font-family: 'Sixtyfour', sans-serif;
     font-size: 1.25rem;
   }
-  #domain-form-container {
-    width: 100%;
-  }
+  #domain-form-container,
+  #domain-form,
   #domain-form-input {
     width: 100%;
   }
