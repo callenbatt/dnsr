@@ -649,7 +649,7 @@ body > footer {
 #plug-container .heart-emoji {
   font-size: 1rem;
 }
-#install-container > div {
+#install-container {
   text-align: center;
   font-size: .75rem;
 }
@@ -657,7 +657,7 @@ body > footer {
 #install-container button {
   background: #fff;
   border: none;
-  color: var(--grey-800);
+  color: var(--grey-600);
   cursor: pointer;
   text-decoration: underline;
 }

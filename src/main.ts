@@ -249,7 +249,6 @@ const createElement = {
   },
 
   resolverHeader: (resolverName: ResolverName, resolverIPs?: string[]) => {
-    console.log(resolverName);
     const headerEl = document.createElement("header");
     headerEl.classList.add("resolver-header");
     headerEl.innerHTML = `
@@ -439,13 +438,14 @@ window.addEventListener("beforeinstallprompt", (event) => {
   // Stash the event so it can be triggered later.
   (window as any).deferredPrompt = event;
   // Remove the 'hidden' class from the install button container.
-  installContainer?.classList?.remove("hidden");
+  installButton?.classList?.remove("hidden");
 });
 
 installButton?.addEventListener("click", async () => {
   console.log("👍", "butInstall-clicked");
   const promptEvent = (window as any).deferredPrompt;
   if (!promptEvent) {
+    console.log("no prompt");
     // The deferred prompt isn't available.
     return;
   }
@@ -458,7 +458,7 @@ installButton?.addEventListener("click", async () => {
   // prompt() can only be called once.
   (window as any).deferredPrompt = null;
   // Hide the install button.
-  installContainer?.classList?.toggle("hidden", true);
+  installButton?.classList?.toggle("hidden", true);
 });
 
 window.addEventListener("appinstalled", (event) => {
