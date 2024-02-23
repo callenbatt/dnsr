@@ -204,14 +204,14 @@
   --brown-900: #3e2723; */
 
   /* Grey */
-  /* --grey-50: #fafafa;
+  --grey-50: #fafafa;
   --grey-100: #f5f5f5;
-  --grey-200: #eeeeee; */
+  --grey-200: #eeeeee;
   --grey-300: #e0e0e0;
   --grey-400: #bdbdbd;
-  /* --grey-500: #9e9e9e; */
+  --grey-500: #9e9e9e;
   --grey-600: #757575;
-  /* --grey-700: #616161; */
+  --grey-700: #616161;
   --grey-800: #424242;
   --grey-900: #212121;
 }
@@ -246,44 +246,57 @@ body.no-hash > header {
 body.no-hash > main {
   display: none;
 }
-
 header {
-  padding: .5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
+  padding: .5rem;
 }
 
-#logo-container a {
-  display: flex;
-  align-items: center;
+body > header {
+  padding: 2rem;
+}
+
+#logo-container {
   position: absolute;
   z-index: 100;;
   left:2rem;
-  top: 2rem;
+  top: 1.75rem;
+}
+#logo-container a {
+  display: flex;
+  align-items: center;
   text-decoration: none;
   color: var(--grey-800)
 }
 
 #logo {
-  width: 5rem;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  display: flex;  
+  align-items: center;
+}
+
+#logo path {
+  fill: var(--grey-800);
 }
 
 #title {
-  font-family: 'Sixtyfour', sans-serif;
-  font-size: 1.75rem;
 }
 
 #domain-form {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
   position: relative;
   width: 36rem;
 }
-
+#domain-form-header {
+  text-align: center;
+  padding-bottom: 2rem;
+}
 #domain-form-input {
   border: 1px solid var(--grey-300);
   border-radius: 2rem;
@@ -313,7 +326,6 @@ header {
   color: var(--grey-800);
   border: 1px solid var(--grey-300);
   border-radius: .5rem;
-  margin-left: .5rem;
   cursor: pointer;
 }
 
@@ -322,6 +334,31 @@ header {
   max-width: 40rem;
   text-align: center;
 }
+.no-hash #record-filter {
+  display: none;
+}
+#record-filter {
+  /* display: flex; */
+  display: none;
+  gap: .5rem;
+  justify-content: center;
+  font-family: 'Sixtyfour', sans-serif;
+}
+
+#record-filter > button {
+  align-items: center;
+  border: 1px solid;
+  border-radius: 1rem;
+  display: flex;
+  font-size: .75rem;
+  height: 1.25rem;
+  justify-content: center;
+  min-width: 3rem;
+  width: 3rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
 
 main {
   display: flex;
@@ -525,38 +562,56 @@ main {
   width: 3rem;
 }
 
+#record-filter > button.type-cname,
 .type-cname .type-label {
   background-color: var(--green-50);
   border-color: var(--green-900);
+  color: var(--green-900);
   font-size: .625rem;
 }
 
+#record-filter > button.type-a,
 .type-a .type-label {
   background-color: var(--purple-50);
   border-color: var(--purple-900);
+  color: var(--purple-900);
 }
 
+#record-filter > button.type-aaaa,
 .type-aaaa .type-label {
   background-color: var(--deepPurple-50);
   border-color: var(--deepPurple-900);
+  color: var(--deepPurple-900);
 }
 
+#record-filter > button.type-mx, 
 .type-mx .type-label {
   background-color: var(--indigo-50);
   border-color: var(--indigo-900);
+  color: var(--indigo-900);
 }
+#record-filter > button.type-txt, 
 .type-txt .type-label {
   background-color: var(--blue-50);
   border-color: var(--blue-900);
+  color: var(--blue-900);
 }
+#record-filter > button.type-caa,
 .type-caa .type-label {
   background-color: var(--lightBlue-50);
   border-color: var(--lightBlue-900);
+  color: var(--lightBlue-900);
 }
 .type-error .type-label {
   background-color: var(--red-50);
   border-color: var(--red-900);
 }
+#record-filter > button.inactive {
+  background-color: var(--grey-50);
+  border-color: var(--grey-500);
+  color: var(--grey-500);
+}
+
 .data-label {
   flex: 1;
   overflow: hidden;
@@ -694,26 +749,24 @@ body.dark {
     max-width: 50vw;
     padding: .5rem
   }
-  header {
-    padding: .5rem;
+  body > header {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     width: 100%;
   }
-  #logo-container > a {
-    padding-left: 2rem;
+  #logo-container {
+    padding-right: 2rem;
     width: auto;
     position: initial;
   }
-  .no-hash #logo-container > a {
+  .no-hash #logo-container {
     position: absolute;
   }
   #logo {
-    width: 4rem;
+    width: 3rem;
   }
   #title {
-    font-family: 'Sixtyfour', sans-serif;
     font-size: 1.25rem;
   }
   #domain-form-container,
@@ -724,18 +777,22 @@ body.dark {
 }
 
 @media screen and (max-width: 480px) {
-  main {
+
+  body > header {
     flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 4rem;
   }
-  #doh-section, 
-  #authoritative-section {
-    max-width: 100%;
-  }
-  #logo-container > a{
-    padding-left: 0;
+  
+  #logo-container {
+    padding-right: 0;
     position: absolute;
-    top: 1rem;
+    top: 0;
     left: 1rem;
+  }
+  .no-hash #logo-container {
+    position: initial;
   }
   #logo {
     width: 3rem;
@@ -749,5 +806,12 @@ body.dark {
 
   .mobile.fetching #doh-container {
     display: none;
+  }
+  main {
+    flex-flow: column;
+  }
+  #doh-section, 
+  #authoritative-section {
+    max-width: 100%;
   }
 }

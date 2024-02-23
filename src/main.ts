@@ -424,14 +424,6 @@ function renderNoHashPage() {
     <p>A fast, multi-record, authoritative DNS dig tool</p>
   `;
   domainFormContainerEl?.prepend(headerEl);
-  const footerEl = document.createElement("footer");
-  footerEl.id = "domain-form-footer";
-  footerEl.innerHTML = `
-    <p> Major global resolvers are queried using DNS over HTTPS (DoH)
-    while authoritative name servers are queried on the edge, 
-    for fast, simple comparison. </p>
-  `;
-  domainFormContainerEl?.appendChild(footerEl);
 }
 
 function reloadPageWithNewHash(e: Event) {
@@ -473,4 +465,23 @@ window.addEventListener("appinstalled", (event) => {
   console.log("👍", "appinstalled", event);
   // Clear the deferredPrompt so it can be garbage collected
   (window as any).deferredPrompt = null;
+});
+
+function toggleHiddenRecords(e: Event) {
+  const el = e.target as HTMLElement;
+  el.classList.toggle("inactive");
+  const type = el.getAttribute("data-filter") || "";
+  const records = document.querySelectorAll(
+    `.name-section .type-${type.toLowerCase()}`
+  );
+  records.forEach((record) => {
+    record.classList.toggle("hidden");
+  });
+}
+// record filter
+
+const recordFilter = document.getElementById("record-filter");
+recordFilter?.addEventListener("click", (e: Event) => {
+  if ((e.target as HTMLElement).tagName !== "BUTTON") return;
+  toggleHiddenRecords(e);
 });
