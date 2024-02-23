@@ -283,8 +283,6 @@ body > header {
   fill: var(--grey-800);
 }
 
-#title {
-}
 
 #domain-form {
   display: flex;
@@ -313,12 +311,12 @@ body > header {
   position: absolute;
   height: 3rem;
   width: 3rem;
-  font-family: 'Sixtyfour', sans-serif;
   font-size: .75rem;
-  right: 0;
-  transform: translateX(-75%);
+  right: .25rem;
   cursor: pointer;
-  color: var(--grey-600)
+}
+#domain-form-button path {
+  fill: var(--grey-600)
 }
 
 #domain-form-submit {
