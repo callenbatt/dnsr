@@ -9,17 +9,41 @@ import {
 const hash = window.location.hash.replace("#", "");
 const input = document.getElementById("domain-form-input") as HTMLInputElement;
 const installButton = document.getElementById("install-button");
-const installContainer = document.getElementById("install-container");
+const darkModeToggle = document.getElementById("mode-container");
+
+const prefersDarkScheme = window.matchMedia(
+  "(prefers-color-scheme: dark)"
+).matches;
+const userPreference = localStorage.getItem("theme");
+const theme = userPreference || (prefersDarkScheme ? "dark" : "light");
+let DARK_MODE_DEGREE = theme === "dark" ? -180 : 0;
+document.body.classList.toggle("dark", theme === "dark");
+
+if (darkModeToggle) {
+  requestAnimationFrame(() => {
+    darkModeToggle.style.transition = `transform 0.5s ease-out`;
+  });
+}
+
+function toggleTheme() {
+  const currentTheme = document.body.classList.contains("dark")
+    ? "dark"
+    : "light";
+  const newTheme = currentTheme === "dark" ? "light" : "dark";
+  document.body.classList.toggle("dark", newTheme === "dark");
+  localStorage.setItem("theme", newTheme);
+}
 // assign the mobile class to the body if the screen width is less than 768px
 if (window.innerWidth < 768) {
   document.body.classList.add("mobile", "fetching");
 }
 
-const darkModeToggle = document.getElementById("dark-mode-toggle");
 darkModeToggle?.addEventListener(
-  "change",
-  () => {
-    document.body.classList.toggle("dark");
+  "click",
+  (e) => {
+    if (!(e.target as HTMLElement).closest("button")) return;
+    toggleTheme();
+    darkModeToggle.style.transform = `rotate(${(DARK_MODE_DEGREE -= 180)}deg)`;
   },
   false
 );

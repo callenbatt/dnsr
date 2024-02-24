@@ -235,6 +235,7 @@ body {
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
   color: var(--grey-800);
+  overflow-x: hidden;
 }
 
 body.no-hash > header {
@@ -256,6 +257,7 @@ header {
 
 body > header {
   padding: 2rem;
+  position: relative; 
 }
 
 #logo-container {
@@ -335,6 +337,7 @@ body > header {
 .no-hash #record-filter {
   display: none;
 }
+
 #record-filter {
   /* display: flex; */
   display: none;
@@ -357,6 +360,32 @@ body > header {
   cursor: pointer;
 }
 
+#mode-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-flow: column;
+  width: 8rem;
+  position: absolute;
+  height: 8rem;
+  top: -4.5rem;
+  right: -2rem;
+}
+.dark #mode-container {
+  transform: rotate(-180deg);
+}
+#mode-container button {
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+  font-size: .75rem;
+  cursor: pointer;
+}
+#mode-container button path {
+  fill: var(--grey-800);
+}
 
 main {
   display: flex;
@@ -378,16 +407,12 @@ main {
 #authoritative-header:before {
   content: '';
   display: block;
-  height: .25rem;
+  height: 1px;
   width: calc(100% - 2rem);
   position: absolute;
+  background-color: var(--grey-300);
 }
-#doh-header:before {
-  background-color: var(--blue-500);
-}
-#authoritative-header:before {
-  background-color: var(--green-500);
-}
+
 #doh-header h2,
 #authoritative-header h2 {
   background: #fff;
@@ -638,17 +663,22 @@ body > footer {
   color: var(--grey-600);
 }
 
-#plug-container span {
-  padding: .25rem;
+#plug-container .text {
+  font-size: 1rem;
+  padding: .5rem;
 }
 
-#plug-container img {
-  max-width: 1rem;
-  max-height: 1rem;
-}
 #plug-container .heart-emoji {
   font-size: 1rem;
 }
+#plug-container a {
+  padding: .5rem;
+}
+#plug-container a svg{
+  width: 1rem;
+  height: 1rem;
+}
+
 #install-container {
   text-align: center;
   font-size: .75rem;
@@ -667,7 +697,26 @@ body.dark {
   background-color: var(--grey-900);
   color: var(--grey-300)
 }
-
+.dark #logo path {
+  fill: var(--grey-300);
+}
+.dark #logo-container a {
+  color: var(--grey-300);
+}
+.dark #domain-form-input {
+  background: var(--grey-900);
+  border: 1px solid var(--grey-600);
+  color: var(--grey-300);
+}
+.dark #domain-form-button {
+  background: var(--grey-900);
+}
+.dark #domain-form-button path {
+  fill: var(--grey-300);
+}
+.dark #mode-container button path {
+  fill: var(--grey-300);
+}
 .dark #doh-header h2,
 .dark #authoritative-header h2,
 .dark .resolver-header h3 {
@@ -713,30 +762,46 @@ body.dark {
 .dark .type-cname .type-label {
   background-color: color-mix(in srgb, var(--green-900) 25%, transparent 75%);
   border-color: var(--green-100);
+  color: var(--green-100);
 }
 .dark .type-a .type-label {
   background-color: color-mix(in srgb, var(--purple-900) 25%, transparent 75%);
   border-color: var(--purple-100);
+  color: var(--purple-100);
 }
 .dark .type-aaaa .type-label {
   background-color: color-mix(in srgb, var(--deepPurple-900) 25%, transparent 75%);
   border-color: var(--deepPurple-100);
+  color: var(--deepPurple-100);
 }
 .dark .type-mx .type-label {
   background-color: color-mix(in srgb, var(--indigo-900) 25%, transparent 75%);
   border-color: var(--indigo-100);
+  color: var(--indigo-100);
 }
 .dark .type-txt .type-label {
   background-color: color-mix(in srgb, var(--blue-900) 25%, transparent 75%);
   border-color: var(--blue-100);
+  color: var(--blue-100);
 }
 .dark .type-caa .type-label {
   background-color: color-mix(in srgb, var(--lightBlue-900) 25%, transparent 75%);
   border-color: var(--lightBlue-100);
+  color: var(--lightBlue-100);
 }
 .dark .type-error .type-label {
   background-color: color-mix(in srgb, var(--red-900) 25%, transparent 75%);
   border-color: var(--red-100);
+  color: var(--red-100);
+}
+.dark #plug-container {
+  color: var(--grey-400);
+}
+.dark #plug-container #plug-github svg path {
+  fill: var(--grey-300);
+}
+.dark #install-container button {
+  color: var(--grey-400);
 }
 /* Media Queries */
 @media screen and (max-width: 960px) {
@@ -754,7 +819,7 @@ body.dark {
     width: 100%;
   }
   #logo-container {
-    padding-right: 2rem;
+    padding-right: 1rem;
     width: auto;
     position: initial;
   }
@@ -771,6 +836,9 @@ body.dark {
   #domain-form,
   #domain-form-input {
     width: 100%;
+  }
+  body:not(.no-hash) #domain-form-container {
+    padding-right: 1rem
   }
 }
 
@@ -801,7 +869,9 @@ body.dark {
   .dark #title {
     background-color: var(--grey-900);
   }
-
+  body:not(.no-hash) #domain-form-container {
+    padding: 0;
+  }
   .mobile.fetching #doh-container {
     display: none;
   }
