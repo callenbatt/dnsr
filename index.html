@@ -26,8 +26,18 @@
         };
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
+    <script>
+      window.theme =
+        localStorage.getItem("theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
+    </script>
   </head>
   <body>
+    <script>
+      document.body.classList.toggle("dark", window.theme === "dark");
+    </script>
     <header>
       <div id="logo-container">
         <a href="/">
